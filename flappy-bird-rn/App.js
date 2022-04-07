@@ -1,6 +1,5 @@
-import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar'
 import React, { useState, useEffect } from 'react'
-import { Dimensions, StyleSheet, View, TouchableWithoutFeedback } from 'react-native'
+import { Dimensions, StyleSheet, View, ImageBackground, TouchableWithoutFeedback } from 'react-native'
 import Bird from './components/Bird'
 import Obstacles from './components/Obstacles'
 import ScoreBoard from './components/ScoreBoard'
@@ -10,13 +9,13 @@ const screenHeight = Dimensions.get("screen").height //get screen height on whic
 
 function App() {
   const [ birdBottom, setBirdBottom ] = useState(screenHeight && screenHeight / 2) // bird will move only up and down with us manipulating the bottom position on screen (starting at middle of screen)
+  const [ score, setScore ] = useState(0)
   const [ obstaclesLeft, setObstaclesLeft ] = useState(screenWidth && screenWidth)
   const [ obstaclesLeftTwo, setObstaclesLeftTwo ] = useState(screenWidth && screenWidth + screenWidth/2 + 30)
   const [ obstacleRanHeight, setObstacleRanHeight ] = useState(0)
   const [ obstacleRanHeightTwo, setObstacleRanHeightTwo ] = useState(0)
   const [ isGameOver, setIsGameOver ] = useState(false)
   const [ modalVisible, setModalVisible ] = useState(false)
-  const [ score, setScore ] = useState(0)
 
   const birdLeft = screenWidth / 2 //point at the bottom left of our bird view/div
   const gravity = 3
@@ -49,14 +48,15 @@ function App() {
     if (obstaclesLeft > -obstacleWidth) {
       obstaclesLeftTimerId = setInterval(() => {
         setObstaclesLeft(obstaclesLeft => obstaclesLeft - 5)
-      }, 30) //speed of obstacle movement (for difficulty)
+      }, 30) //speed of obstacle movement (for future difficulty)
 
       return () => {
         clearInterval(obstaclesLeftTimerId)
       }
     } else {
-      setScore(score => score + 1)
+      //when obstacle goes off the screen
       setObstaclesLeft(screenWidth) //loop obstacle by restarting on left of screen
+      setScore(score => score + 1)
       setObstacleRanHeight(0 - Math.random() * 100)
     }
   }, [obstaclesLeft])
@@ -72,8 +72,9 @@ function App() {
         clearInterval(obstaclesLeftTimerIdTwo)
       }
     } else {
-      setScore(score => score + 1)
+      //when obstacle goes off the screen
       setObstaclesLeftTwo(screenWidth) //loop obstacle
+      setScore(score => score + 1)
       setObstacleRanHeightTwo(0 - Math.random() * 100)
     }
   }, [obstaclesLeftTwo])
@@ -108,6 +109,7 @@ function App() {
 
   /* //LEFT OFF\\
     - fix score (shows 0 even though 1 obstacle passed) for both initial gameplay and restart
+      - currently score changes when obstacle leaves screen
     - add collision logic to corner of obstacles (other side of obstacle left, so might be obstacle left + obstacle width)
     - add css/styling to game
   */
@@ -126,30 +128,35 @@ function App() {
     }
   }
 
+  const backgroundImage = { uri: "https://i.ibb.co/V3Wj4Qp/fb-game-background.png" }
+
   return (
     <TouchableWithoutFeedback onPress={jump}>
       <View style={styles.container}>
-        <ScoreBoard score={score} modalVisible={modalVisible} restart={restart}/>
-        <Bird
-          birdBottom={birdBottom}
-          birdLeft={birdLeft}
-        />
-        <Obstacles
-          obstacleHeight={obstacleHeight}
-          obstacleWidth={obstacleWidth}
-          randomHeight={obstacleRanHeight}
-          gap={gap}
-          obstaclesLeft={obstaclesLeft}
-          color={'green'}
-        />
-        <Obstacles
-          obstacleHeight={obstacleHeight}
-          obstacleWidth={obstacleWidth}
-          randomHeight={obstacleRanHeightTwo}
-          gap={gap}
-          obstaclesLeft={obstaclesLeftTwo}
-          color={'yellow'}
-        />
+        <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.background}>
+          <ScoreBoard score={score} modalVisible={modalVisible} restart={restart}/>
+          <Bird
+            birdBottom={birdBottom}
+            birdLeft={birdLeft}
+          />
+          <View style={styles.top}></View>
+          <Obstacles
+            obstacleHeight={obstacleHeight}
+            obstacleWidth={obstacleWidth}
+            randomHeight={obstacleRanHeight}
+            screenHeight={screenHeight}
+            gap={gap}
+            obstaclesLeft={obstaclesLeft}
+          />
+          <Obstacles
+            obstacleHeight={obstacleHeight}
+            obstacleWidth={obstacleWidth}
+            randomHeight={obstacleRanHeightTwo}
+            screenHeight={screenHeight}
+            gap={gap}
+            obstaclesLeft={obstaclesLeftTwo}
+          />
+        </ImageBackground>
       </View>
     </TouchableWithoutFeedback>
   )
@@ -162,6 +169,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  top: {
+    backgroundColor: 'blue'
+  },
+  background: {
+    width: screenWidth,
+    height: screenHeight
+  }
 })
 
 export default App
