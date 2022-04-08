@@ -1,6 +1,7 @@
 class ScoresController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_res
 	rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_res
+    # before_action :authorize
 
     def index
         scores = Score.all
@@ -30,4 +31,8 @@ class ScoresController < ApplicationController
     def render_unprocessable_entity_res(invalid)
 		render json: { errors: invalid.record.errors.full_messages }, status: :unprocessable_entity
 	end
+
+    def authorize
+        return render json: { error: "Not authorized" }, status: :unauthorized unless session.include? :player_id #may need to be difficulty_id
+    end
 end
