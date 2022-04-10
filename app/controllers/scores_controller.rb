@@ -1,7 +1,7 @@
 class ScoresController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_res
 	rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_res
-    before_action :authorize
+    # before_action :authorize
 
     def index
         scores = Score.all

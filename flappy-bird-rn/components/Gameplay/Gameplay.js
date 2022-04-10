@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { Dimensions, StyleSheet, View, ImageBackground, TouchableWithoutFeedback } from 'react-native'
 import Bird from './Bird'
 import Obstacles from './Obstacles'
-import ScoreBoard from '../ScoreBoard'
+import ScoreBoard from './ScoreBoard'
 
 const screenWidth = Dimensions.get("screen").width //get screen width on whichever mobile phone
 const screenHeight = Dimensions.get("screen").height //get screen height on whichever mobile phone
 
-function Gameplay() {
+function Gameplay({ player }) {
   const [ birdBottom, setBirdBottom ] = useState(screenHeight && screenHeight / 2) // bird will move only up and down with us manipulating the bottom position on screen (starting at middle of screen)
   const [ score, setScore ] = useState(0)
   const [ obstaclesLeft, setObstaclesLeft ] = useState(screenWidth && screenWidth)
@@ -127,7 +127,7 @@ function Gameplay() {
     <TouchableWithoutFeedback onPress={jump}>
       <View style={styles.container}>
         <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.background}>
-          <ScoreBoard score={score} modalVisible={modalVisible} restart={restart}/>
+          <ScoreBoard score={score} modalVisible={modalVisible} restart={restart} player={player}/>
           <Bird
             birdBottom={birdBottom}
             birdLeft={birdLeft}
