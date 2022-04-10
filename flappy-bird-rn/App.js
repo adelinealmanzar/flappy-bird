@@ -1,7 +1,8 @@
 import React, { useState, createContext, useEffect } from 'react'
 import Gameplay from './components/Gameplay/Gameplay'
-import Login from './components/Login'
+import HomePage from './components/HomePage'
 import Constants from "expo-constants"
+import { set } from 'react-hook-form'
 
 export const PlayerContext = createContext()
 
@@ -33,8 +34,9 @@ const tempPlayer = {
 }
 
 function App() {
-  const [renderGameplay, setRenderGameplay] = useState(true)
   const [player, setPlayer] = useState(tempPlayer)
+  const [renderGameplay, setRenderGameplay] = useState(false)
+  const [levelMS, setLevelMS] = useState(30) //might need to move up to app bc gameplay will need it for useffect
 
   const { manifest } = Constants
   const uri = `http://${manifest.debuggerHost.split(':').shift()}:3000`;
@@ -66,7 +68,7 @@ function App() {
   return (
     // <PlayerContext.Provider value={player}>
     <>
-      {renderGameplay ? <Gameplay player={player}/> : <Login setPlayer={setPlayer}/>}
+      {renderGameplay ? <Gameplay player={player} levelMS={levelMS}/> : <HomePage setPlayer={setPlayer} setRenderGameplay={setRenderGameplay} setLevelMS={setLevelMS}/>}
     </>
     // </PlayerContext.Provider>
   )

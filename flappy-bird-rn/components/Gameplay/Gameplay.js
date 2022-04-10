@@ -7,7 +7,7 @@ import ScoreBoard from './ScoreBoard'
 const screenWidth = Dimensions.get("screen").width //get screen width on whichever mobile phone
 const screenHeight = Dimensions.get("screen").height //get screen height on whichever mobile phone
 
-function Gameplay({ player }) {
+function Gameplay({ player, levelMS }) {
   const [ birdBottom, setBirdBottom ] = useState(screenHeight && screenHeight / 2) // bird will move only up and down with us manipulating the bottom position on screen (starting at middle of screen)
   const [ score, setScore ] = useState(0)
   const [ obstaclesLeft, setObstaclesLeft ] = useState(screenWidth && screenWidth)
@@ -48,7 +48,7 @@ function Gameplay({ player }) {
     if (obstaclesLeft > -obstacleWidth) {
       obstaclesLeftTimerId = setInterval(() => {
         setObstaclesLeft(obstaclesLeft => obstaclesLeft - 5)
-      }, 30) //speed of obstacle movement (for future difficulty)
+      }, levelMS) //speed of obstacle movement (for future difficulty)
 
       return () => {
         clearInterval(obstaclesLeftTimerId)
@@ -66,7 +66,7 @@ function Gameplay({ player }) {
     if (obstaclesLeftTwo > -obstacleWidth) {
       obstaclesLeftTimerIdTwo = setInterval(() => {
         setObstaclesLeftTwo(obstaclesLeftTwo => obstaclesLeftTwo - 5)
-      }, 30) //speed of obstacle movements (for difficulty)
+      }, levelMS) //speed of obstacle movements (for difficulty)
 
       return () => {
         clearInterval(obstaclesLeftTimerIdTwo)

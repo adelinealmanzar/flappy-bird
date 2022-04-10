@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, Text, StyleSheet, View, Pressable, ScrollViewBase } from 'react-native'
+import { Modal, Text, StyleSheet, View, Pressable, Image } from 'react-native'
 
 function ScoreBoard({ score, modalVisible, restart, player }) {
   const sortedScores = player?.scores.sort((a, b) => b.score - a.score)
@@ -15,29 +15,34 @@ function ScoreBoard({ score, modalVisible, restart, player }) {
     }
   }
 
+  const gameOverImg = { uri: "https://i.ibb.co/BnWhHYB/gameover-text.jpg" }
+
   return (
-    <Modal
-      animationType='slide'
-      transparent={true}
-      visible={modalVisible}
-      onRequestClose={() => restart()}
-    >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <Text style={styles.scoreText}>Score: {score}</Text>
-          <View>
-            <Text style={styles.highscoresText}>Previous High Scores</Text>
-            {sortedScores.map( playthrough => <Text style={styles.modalText}>|  {renderDifficulty(playthrough.difficulty_id)}  |   {playthrough.score}</Text>)}
+    <>
+      <Modal
+        animationType='slide'
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => restart()}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            {/* <Image source={gameOverImg} styles={styles.gameOver} /> */}
+            <Text style={styles.scoreText}>Score: {score}</Text>
+            <View>
+              <Text style={styles.highscoresText}>Previous High Scores</Text>
+              {sortedScores.map( playthrough => <Text style={styles.modalText} key={playthrough.id}>|  {renderDifficulty(playthrough.difficulty_id)}  |   {playthrough.score}</Text>)}
+            </View>
+            <Pressable
+              style={styles.button}
+              onPress={() => restart()}
+            >
+              <Text style={styles.textStyle}>Restart</Text>
+            </Pressable>
           </View>
-          <Pressable
-            style={styles.button}
-            onPress={() => restart()}
-          >
-            <Text style={styles.textStyle}>Restart</Text>
-          </Pressable>
         </View>
-      </View>
-    </Modal>
+      </Modal>
+    </>
   )
 }
 
@@ -98,6 +103,11 @@ const styles = StyleSheet.create({
       fontWeight: "bold",
       color: "black",
       fontSize: 20
+    },
+    gameOver: {
+      width: 20,
+      height: 50,
+      resizeMode: 'stretch'
     }
 })
 
