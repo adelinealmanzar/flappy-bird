@@ -70,8 +70,31 @@ function Login({ setPlayer }) {
             onChangeText={newPasswordConfirm => setPasswordConfirm(newPasswordConfirm)}
             defaultValue={passwordConfirm}
         />}
-        {renderSignup ? <Button title='Submit' onPress={() => handleSignupSubmit()}/> : <Button title='Submit' onPress={() => handleLoginSubmit()}/>}
-        {renderSignup ? <Button title="Already have an account? Signin!" onPress={() => setRenderSignup(false)}/> : <Button title="Don't have an account yet? Signup!" onPress={() => setRenderSignup(true)}/>}
+        {renderSignup ?
+            <Button
+                title='Submit'
+                onPress={() => handleSignupSubmit()}
+                // style={styles.linkButtons}
+            />
+            : <Button
+                title='Submit'
+                onPress={() => handleLoginSubmit()}
+                // style={styles.linkButtons}
+            />
+        }
+        {renderSignup ?
+            <Button
+                title="Already have an account? Signin!"
+                onPress={() => setRenderSignup(false)}
+                // style={styles.linkButtons}
+            />
+            :
+            <Button
+                title="Don't have an account yet? Signup!"
+                onPress={() => setRenderSignup(true)}
+                // style={styles.linkButtons}
+            />
+        }
     </ImageBackground>
   )
 }
@@ -111,6 +134,10 @@ const styles = StyleSheet.create({
         height: 60,
         bottom: screenHeight - screenHeight/4
     }
+    // linkButtons: {
+    //     color: 'black',
+    //     backgroundColor: 'white'
+    // }
   })
 
 export default Login
