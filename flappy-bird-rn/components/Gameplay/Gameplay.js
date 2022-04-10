@@ -7,7 +7,7 @@ import ScoreBoard from './ScoreBoard'
 const screenWidth = Dimensions.get("screen").width //get screen width on whichever mobile phone
 const screenHeight = Dimensions.get("screen").height //get screen height on whichever mobile phone
 
-function Gameplay({ player, levelMS }) {
+function Gameplay({ player, levelMS, setRenderGameplay }) {
   const [ birdBottom, setBirdBottom ] = useState(screenHeight && screenHeight / 2) // bird will move only up and down with us manipulating the bottom position on screen (starting at middle of screen)
   const [ score, setScore ] = useState(0)
   const [ obstaclesLeft, setObstaclesLeft ] = useState(screenWidth && screenWidth)
@@ -127,7 +127,7 @@ function Gameplay({ player, levelMS }) {
     <TouchableWithoutFeedback onPress={jump}>
       <View style={styles.container}>
         <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.background}>
-          <ScoreBoard score={score} modalVisible={modalVisible} restart={restart} player={player}/>
+          <ScoreBoard score={score} modalVisible={modalVisible} restart={restart} player={player} setRenderGameplay={setRenderGameplay}/>
           <Bird
             birdBottom={birdBottom}
             birdLeft={birdLeft}

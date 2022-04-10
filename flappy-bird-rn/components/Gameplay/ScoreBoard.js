@@ -1,7 +1,7 @@
 import React from 'react'
 import { Modal, Text, StyleSheet, View, Pressable, Image } from 'react-native'
 
-function ScoreBoard({ score, modalVisible, restart, player }) {
+function ScoreBoard({ score, modalVisible, restart, player, setRenderGameplay }) {
   const sortedScores = player?.scores.sort((a, b) => b.score - a.score)
 
   function renderDifficulty(difficultyNum) {
@@ -23,7 +23,7 @@ function ScoreBoard({ score, modalVisible, restart, player }) {
         animationType='slide'
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => restart()}
+        onRequestClose={() => setRenderGameplay(false)}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -34,10 +34,16 @@ function ScoreBoard({ score, modalVisible, restart, player }) {
               {sortedScores.map( playthrough => <Text style={styles.modalText} key={playthrough.id}>|  {renderDifficulty(playthrough.difficulty_id)}  |   {playthrough.score}</Text>)}
             </View>
             <Pressable
-              style={styles.button}
+              style={styles.restartButton}
               onPress={() => restart()}
             >
               <Text style={styles.textStyle}>Restart</Text>
+            </Pressable>
+            <Pressable
+              style={styles.chooseButton}
+              onPress={() => setRenderGameplay(false)} //render homepage
+            >
+              <Text style={styles.textStyle}>Choose Level</Text>
             </Pressable>
           </View>
         </View>
@@ -72,12 +78,19 @@ const styles = StyleSheet.create({
       borderStyle: 'solid',
       borderWidth: 2
     },
-    button: {
+    restartButton: {
       borderRadius: 20,
       padding: 15,
       elevation: 2,
       marginTop: 15,
       backgroundColor: "black"
+    },
+    chooseButton: {
+      borderRadius: 20,
+      padding: 15,
+      elevation: 2,
+      marginTop: 15,
+      backgroundColor: "#84d444"
     },
     textStyle: {
       color: "white",

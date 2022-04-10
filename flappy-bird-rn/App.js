@@ -68,7 +68,7 @@ function App() {
   return (
     // <PlayerContext.Provider value={player}>
     <>
-      {renderGameplay ? <Gameplay player={player} levelMS={levelMS}/> : <HomePage setPlayer={setPlayer} setRenderGameplay={setRenderGameplay} setLevelMS={setLevelMS}/>}
+      {renderGameplay ? <Gameplay player={player} levelMS={levelMS} setRenderGameplay={setRenderGameplay}/> : <HomePage setPlayer={setPlayer} setRenderGameplay={setRenderGameplay} setLevelMS={setLevelMS} />}
     </>
     // </PlayerContext.Provider>
   )
