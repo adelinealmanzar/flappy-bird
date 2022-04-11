@@ -28,7 +28,7 @@ function Gameplay({ player, levelMS, setRenderGameplay }) {
   const gap = 200
 
 
-  //make bird fall with gravity
+  //make bird fall with 'gravity'
   useEffect(() => {
     // as long as birdBottom is above 0, every 30 ms decrease bird position by gravity/3pxs
     if (birdBottom > 0) {
@@ -122,7 +122,6 @@ function Gameplay({ player, levelMS, setRenderGameplay }) {
   }
 
   const backgroundImage = { uri: "https://i.ibb.co/V3Wj4Qp/fb-game-background.png" }
-
   const gameOverImg = { uri: "https://i.ibb.co/DWtMdvW/IMG-9355.jpg" }
 
   return (
@@ -175,7 +174,6 @@ const styles = StyleSheet.create({
     left: 55,
     bottom: -200,
     zIndex: 2,
-    borderStyle: 'solid',
     borderWidth: 2,
     borderRadius: 10
   }

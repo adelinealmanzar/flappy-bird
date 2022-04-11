@@ -1,25 +1,24 @@
 import React, { useState } from 'react'
-import { TextInput, StyleSheet, Button } from 'react-native'
+import { TextInput, StyleSheet, Button, Text } from 'react-native'
 
 function Login({ setPlayer, setRenderLogin }) {
     const [username, setUsername] = useState(null)
     const [password, setPassword] = useState(null)
     const [passwordConfirm, setPasswordConfirm] = useState(null)
     const [renderSignup, setRenderSignup] = useState(true)
+    const [errorMsgs, setErrorMsgs] = useState(null)
 
     function handleLoginSubmit() {
-        console.log(username, password)
         const playerObj = { username, password }
-        submitFetch(playerObj, '/login')
+        submitFetch(playerObj, 'https://stark-bayou-42970.herokuapp.com/login')
     }
 
     function handleSignupSubmit() {
         const playerObj = { username, password, password_confirmation: passwordConfirm}
-        submitFetch(playerObj, '/players')
+        submitFetch(playerObj, 'https://stark-bayou-42970.herokuapp.com/players')
     }
 
     function submitFetch(playerObj, routeString) {
-        //TODO: fix both login and signup seem to not be working/posting to backend
         fetch(routeString, {
             method: "POST",
             headers: {
@@ -34,10 +33,11 @@ function Login({ setPlayer, setRenderLogin }) {
                     setRenderLogin(false) //display start screen on successful response
                 })
             } else {
-                // r.json().then(data => setErrorMsg(() => data[routeString === '/login' ? 'error' : 'errors']))
-                // setShowErrorMsg(true)
-                // setPassword("")
-                console.log('TODO: render error messages here')
+                r.json().then(errors => {
+                    errors.error && setErrorMsgs([errors.error])
+                    errors.errors && setErrorMsgs(errors.errors)
+                })
+                setPassword("")
             }
         })
     }
@@ -64,6 +64,7 @@ function Login({ setPlayer, setRenderLogin }) {
             onChangeText={newPasswordConfirm => setPasswordConfirm(newPasswordConfirm)}
             defaultValue={passwordConfirm}
         />}
+        {errorMsgs && errorMsgs?.map(error => <Text key={errorMsgs.indexOf(error)}>{error}</Text>)}
         {renderSignup ?
             <Button
                 title='Submit'
