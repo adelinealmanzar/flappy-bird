@@ -2,7 +2,6 @@ import React, { useState, createContext, useEffect } from 'react'
 import Gameplay from './components/Gameplay/Gameplay'
 import HomePage from './components/HomePage'
 import Constants from "expo-constants"
-import { set } from 'react-hook-form'
 
 export const PlayerContext = createContext()
 
@@ -43,18 +42,20 @@ function App() {
 
   useEffect(() => {
     // fetch('/me')
-    fetch('http://66.65.82.214/localhost3000/players')
+    // fetch('http://66.65.82.214:3000/players')
+    fetch('http://192.168.1.190:3000/players')
     //uncomment proxy package.json when working
     // fetch(uri)
     .then(r => {
-      if (r.ok) {
-        r.json()
-        // .then(player => setPlayer(() => player))
-        .then(players => console.log('in fetch', players[0]))
-      } else {
-        r.json()
-        .then(data => console.log('in fetch error', data)) // TODO: see if need this else
-      }
+      console.log(r)
+      // if (r.ok) {
+      //   r.json()
+      //   // .then(player => setPlayer(() => player))
+      //   .then(players => console.log('in fetch', players[0]))
+      // } else {
+      //   r.json()
+      //   .then(data => console.log('in fetch error', data)) // TODO: see if need this else
+      // }
     })
   }, [])
 

@@ -15,7 +15,6 @@ function ScoreBoard({ score, modalVisible, restart, player, setRenderGameplay })
     }
   }
 
-  const gameOverImg = { uri: "https://i.ibb.co/BnWhHYB/gameover-text.jpg" }
 
   return (
     <>
@@ -31,20 +30,22 @@ function ScoreBoard({ score, modalVisible, restart, player, setRenderGameplay })
             <Text style={styles.scoreText}>Score: {score}</Text>
             <View>
               <Text style={styles.highscoresText}>Previous High Scores</Text>
-              {sortedScores.map( playthrough => <Text style={styles.modalText} key={playthrough.id}>|  {renderDifficulty(playthrough.difficulty_id)}  |   {playthrough.score}</Text>)}
+              {sortedScores?.map( playthrough => <Text style={styles.modalText} key={playthrough.id}>|  {renderDifficulty(playthrough.difficulty_id)}  |   {playthrough.score}</Text>)}
             </View>
-            <Pressable
-              style={styles.restartButton}
-              onPress={() => restart()}
-            >
-              <Text style={styles.textStyle}>Restart</Text>
-            </Pressable>
-            <Pressable
-              style={styles.chooseButton}
-              onPress={() => setRenderGameplay(false)} //render homepage
-            >
-              <Text style={styles.textStyle}>Choose Level</Text>
-            </Pressable>
+            <View style={styles.buttons}>
+              <Pressable
+                style={styles.restartButton}
+                onPress={() => restart()}
+              >
+                <Text style={styles.textStyle}>Restart</Text>
+              </Pressable>
+              <Pressable
+                style={styles.chooseButton}
+                onPress={() => setRenderGameplay(false)} //render homepage
+              >
+                <Text style={styles.textStyle}>Choose Level</Text>
+              </Pressable>
+            </View>
           </View>
         </View>
       </Modal>
@@ -64,7 +65,6 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       padding: 35,
       width: 340,
-      // height: 400,
       bottom: -60,
       alignItems: "center",
       shadowColor: "#000",
@@ -81,16 +81,24 @@ const styles = StyleSheet.create({
     restartButton: {
       borderRadius: 20,
       padding: 15,
+      paddingRight: 15,
       elevation: 2,
       marginTop: 15,
-      backgroundColor: "black"
+      backgroundColor: "#84d444",
+      borderStyle: 'solid',
+      borderWidth: 2
     },
     chooseButton: {
       borderRadius: 20,
       padding: 15,
-      elevation: 2,
       marginTop: 15,
-      backgroundColor: "#84d444"
+      marginLeft: 15,
+      backgroundColor: "#d3bb25",
+      borderStyle: 'solid',
+      borderWidth: 2
+    },
+    buttons: {
+      flexDirection: 'row'
     },
     textStyle: {
       color: "white",
@@ -116,11 +124,6 @@ const styles = StyleSheet.create({
       fontWeight: "bold",
       color: "black",
       fontSize: 20
-    },
-    gameOver: {
-      width: 20,
-      height: 50,
-      resizeMode: 'stretch'
     }
 })
 

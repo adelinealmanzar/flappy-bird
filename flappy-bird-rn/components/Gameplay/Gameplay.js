@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Dimensions, StyleSheet, View, ImageBackground, TouchableWithoutFeedback } from 'react-native'
+import { Dimensions, StyleSheet, View, ImageBackground, TouchableWithoutFeedback, Image } from 'react-native'
 import Bird from './Bird'
 import Obstacles from './Obstacles'
 import ScoreBoard from './ScoreBoard'
@@ -123,10 +123,13 @@ function Gameplay({ player, levelMS, setRenderGameplay }) {
 
   const backgroundImage = { uri: "https://i.ibb.co/V3Wj4Qp/fb-game-background.png" }
 
+  const gameOverImg = { uri: "https://i.ibb.co/DWtMdvW/IMG-9355.jpg" }
+
   return (
     <TouchableWithoutFeedback onPress={jump}>
       <View style={styles.container}>
         <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.background}>
+          {isGameOver && <Image source={gameOverImg} style={styles.gameOver}></Image>}
           <ScoreBoard score={score} modalVisible={modalVisible} restart={restart} player={player} setRenderGameplay={setRenderGameplay}/>
           <Bird
             birdBottom={birdBottom}
@@ -164,6 +167,17 @@ const styles = StyleSheet.create({
   background: {
     width: screenWidth,
     height: screenHeight
+  },
+  gameOver: {
+    width: 300,
+    height: 80,
+    resizeMode: 'cover',
+    left: 55,
+    bottom: -200,
+    zIndex: 2,
+    borderStyle: 'solid',
+    borderWidth: 2,
+    borderRadius: 10
   }
 })
 
