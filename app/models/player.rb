@@ -1,8 +1,7 @@
 class Player < ApplicationRecord
     has_secure_password
     
-    has_many :difficulties
-    has_many :scores, through: :difficulties
+    has_many :scores
 
     validates :username, presence: true
     validates :password, presence: true

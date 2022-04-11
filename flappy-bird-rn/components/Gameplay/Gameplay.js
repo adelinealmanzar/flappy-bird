@@ -109,6 +109,8 @@ function Gameplay({ player, levelMS, setRenderGameplay }) {
 
   function gameover() {
     setIsGameOver(true)
+    // post new score at end of gameplay to the current player's info
+    // fetch(`https://stark-bayou-42970.herokuapp.com/scores`) // post new score to scores table
     setModalVisible(true)
     clearInterval(birdBottomTimerId)
     clearInterval(obstaclesLeftTimerId)

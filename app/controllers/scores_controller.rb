@@ -21,7 +21,7 @@ class ScoresController < ApplicationController
     private
 
     def score_params
-        params.permit(:score, :victory, :difficulty_id)
+        params.permit(:score, :victory, :difficulty_id, :player_id)
     end
 
     def render_not_found_res

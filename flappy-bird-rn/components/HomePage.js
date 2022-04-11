@@ -8,13 +8,11 @@ const screenHeight = Dimensions.get("screen").height //get screen height on whic
 
 
 function HomePage({ setPlayer, setRenderGameplay, setLevelMS }) {
-    const [renderLogin, setRenderLogin] = useState(true)
+  const [renderLogin, setRenderLogin] = useState(true)
 
-    const titleImage = { uri: "https://i.ibb.co/QH6KmKR/flappybirdy-regular.png"}
-    const backgroundImage = { uri: "https://i.ibb.co/V3Wj4Qp/fb-game-background.png"}
-    const birdImage = { uri: "https://i.ibb.co/PcCqNRP/flappy-bird.png" }
-
-    // stat page will render <Gameplay player={player}/>
+  const titleImage = { uri: "https://i.ibb.co/QH6KmKR/flappybirdy-regular.png"}
+  const backgroundImage = { uri: "https://i.ibb.co/V3Wj4Qp/fb-game-background.png"}
+  const birdImage = { uri: "https://i.ibb.co/PcCqNRP/flappy-bird.png" }
 
   return (
     <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.background}>
@@ -26,30 +24,30 @@ function HomePage({ setPlayer, setRenderGameplay, setLevelMS }) {
 }
 
 const styles = StyleSheet.create({
-    background: {
-        width: screenWidth,
-        height: screenHeight,
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    bird: {
-        width: 50,
-        height: 60,
-        position: 'absolute',
-        overflow: 'hidden',
-        left: 50,
-        bottom: screenHeight - screenHeight/2.8,
-        transform: [{ rotate: '-15deg'}]
-    },
-    title: {
-        position: 'absolute',
-        overflow: 'hidden',
-        alignSelf: 'center',
-        width: 300,
-        height: 60,
-        bottom: screenHeight - screenHeight/4
-    }
-  })
+  background: {
+      width: screenWidth,
+      height: screenHeight,
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+  },
+  bird: {
+      width: 50,
+      height: 60,
+      position: 'absolute',
+      overflow: 'hidden',
+      left: 50,
+      bottom: screenHeight - screenHeight/2.8,
+      transform: [{ rotate: '-15deg'}]
+  },
+  title: {
+      position: 'absolute',
+      overflow: 'hidden',
+      alignSelf: 'center',
+      width: 300,
+      height: 60,
+      bottom: screenHeight - screenHeight/4
+  }
+})
 
 export default HomePage
