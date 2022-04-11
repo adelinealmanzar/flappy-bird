@@ -5,24 +5,25 @@ function Login({ setPlayer, setRenderLogin }) {
     const [username, setUsername] = useState(null)
     const [password, setPassword] = useState(null)
     const [passwordConfirm, setPasswordConfirm] = useState(null)
-    const [renderSignup, setRenderSignup] = useState(true)
+    const [renderSignup, setRenderSignup] = useState(false)
     const [errorMsgs, setErrorMsgs] = useState(null)
 
     function handleLoginSubmit() {
         const playerObj = { username, password }
-        submitFetch(playerObj, 'https://stark-bayou-42970.herokuapp.com/login')
+        submitFetch(playerObj, 'https://cryptic-headland-19872.herokuapp.com/login')
     }
 
     function handleSignupSubmit() {
         const playerObj = { username, password, password_confirmation: passwordConfirm}
-        submitFetch(playerObj, 'https://stark-bayou-42970.herokuapp.com/players')
+        submitFetch(playerObj, 'https://cryptic-headland-19872.herokuapp.com/players')
     }
 
     function submitFetch(playerObj, routeString) {
         fetch(routeString, {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify(playerObj),
           })

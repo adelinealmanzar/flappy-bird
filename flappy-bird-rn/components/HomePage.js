@@ -7,7 +7,7 @@ const screenWidth = Dimensions.get("screen").width //get screen width on whichev
 const screenHeight = Dimensions.get("screen").height //get screen height on whichever mobile phone
 
 
-function HomePage({ setPlayer, setRenderGameplay, setLevelMS }) {
+function HomePage({ setPlayer, setRenderGameplay, setLevelMS, setCurrentDifficultyLvl }) {
   const [renderLogin, setRenderLogin] = useState(true)
 
   const titleImage = { uri: "https://i.ibb.co/QH6KmKR/flappybirdy-regular.png"}
@@ -18,7 +18,7 @@ function HomePage({ setPlayer, setRenderGameplay, setLevelMS }) {
     <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.background}>
         <ImageBackground source={birdImage} resizeMode="stretch" style={styles.bird} />
         <ImageBackground source={titleImage} resizeMode="stretch" style={styles.title} />
-        {renderLogin ? <Login setPlayer={setPlayer} setRenderLogin={setRenderLogin}/> : <Start setRenderGameplay={setRenderGameplay} setLevelMS={setLevelMS}/>}
+        {renderLogin ? <Login setPlayer={setPlayer} setRenderLogin={setRenderLogin}/> : <Start setRenderGameplay={setRenderGameplay} setLevelMS={setLevelMS} setCurrentDifficultyLvl={setCurrentDifficultyLvl}/>}
     </ImageBackground>
   )
 }

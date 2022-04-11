@@ -1,10 +1,11 @@
 import React from 'react'
 import { View, Text, Pressable, StyleSheet } from 'react-native'
 
-function Start({ setRenderGameplay, setLevelMS }) {
+function Start({ setRenderGameplay, setLevelMS, setCurrentDifficultyLvl }) {
 
-    function handlePress(levelMSBtn) {
+    function handlePress(levelMSBtn, diffID) {
         setLevelMS(levelMSBtn)
+        setCurrentDifficultyLvl(diffID)
         setRenderGameplay(true)
     }
 
@@ -14,19 +15,19 @@ function Start({ setRenderGameplay, setLevelMS }) {
         <View style={styles.view}>
             <Pressable
                 style={styles.button}
-                onPress={() => handlePress(45)}
+                onPress={() => handlePress(45, 1)}
             >
                 <Text style={styles.textStyle}>EASY</Text>
             </Pressable>
             <Pressable
                 style={styles.button}
-                onPress={() => handlePress(30)}
+                onPress={() => handlePress(30, 2)}
             >
                 <Text style={styles.textStyle}>MEDIUM</Text>
             </Pressable>
             <Pressable
                 style={styles.button}
-                onPress={() => handlePress(15)}
+                onPress={() => handlePress(15, 3)}
             >
                 <Text style={styles.textStyle}>HARD</Text>
             </Pressable>
