@@ -7,8 +7,7 @@ const screenWidth = Dimensions.get("screen").width //get screen width on whichev
 const screenHeight = Dimensions.get("screen").height //get screen height on whichever mobile phone
 
 
-function HomePage({ setPlayer, setRenderGameplay, setLevelMS, setCurrentDifficultyLvl }) {
-  const [renderLogin, setRenderLogin] = useState(true)
+function HomePage({ setPlayer, setRenderGameplay, setLevelMS, setCurrentDifficultyLvl, renderLogin, setRenderLogin }) {
 
   const titleImage = { uri: "https://i.ibb.co/QH6KmKR/flappybirdy-regular.png"}
   const backgroundImage = { uri: "https://i.ibb.co/V3Wj4Qp/fb-game-background.png"}

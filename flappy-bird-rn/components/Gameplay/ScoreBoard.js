@@ -1,8 +1,37 @@
-import React from 'react'
-import { Modal, Text, StyleSheet, View, Pressable, Image } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Modal, Text, StyleSheet, View, Pressable } from 'react-native'
 
-function ScoreBoard({ score, modalVisible, restart, player, setRenderGameplay }) {
-  const sortedScores = player?.scores.sort((a, b) => b.score - a.score)
+function ScoreBoard({ score, isGameOver, restart, player, setRenderGameplay, setRenderLogin, currentDifficultyLvl }) {
+  const [renderScores, setRenderScores] = useState(null)
+
+  useEffect(() => {
+    const scoreObj = {
+      score: score,
+      difficulty_id: currentDifficultyLvl,
+      player_id: player.id
+    }
+    
+    if (isGameOver) {
+      console.log('gameOver')
+      fetch(`https://cryptic-headland-19872.herokuapp.com/scores`, {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(scoreObj),
+      })
+      .then(r => r.json())
+      .then((newScorePlaythrough) => {
+        const sortedScores = [...player.scores, newScorePlaythrough].sort((a, b) => b.score - a.score).slice(0, 3)
+        setRenderScores(sortedScores)
+      })
+    }
+  }, [isGameOver])
+
+  function testRenderScores() {
+    
+  }
 
   function renderDifficulty(difficultyNum) {
     switch(difficultyNum) {
@@ -15,13 +44,17 @@ function ScoreBoard({ score, modalVisible, restart, player, setRenderGameplay })
     }
   }
 
+  function handleChooseLevel() {
+    setRenderGameplay(false) //render homepage
+    setRenderLogin(false) //render start page
+  }
 
   return (
     <>
       <Modal
         animationType='slide'
         transparent={true}
-        visible={modalVisible}
+        visible={isGameOver}
         onRequestClose={() => setRenderGameplay(false)}
       >
         <View style={styles.centeredView}>
@@ -30,7 +63,7 @@ function ScoreBoard({ score, modalVisible, restart, player, setRenderGameplay })
             <Text style={styles.scoreText}>Score: {score}</Text>
             <View>
               <Text style={styles.highscoresText}>Previous High Scores</Text>
-              {sortedScores?.map( playthrough => <Text style={styles.modalText} key={playthrough.id}>|  {renderDifficulty(playthrough.difficulty_id)}  |   {playthrough.score}</Text>)}
+              {renderScores?.map( playthrough => <Text style={styles.modalText} key={playthrough.id}>|  {renderDifficulty(playthrough.difficulty_id)}  |   {playthrough.score}</Text>)}
             </View>
             <View style={styles.buttons}>
               <Pressable
@@ -41,7 +74,7 @@ function ScoreBoard({ score, modalVisible, restart, player, setRenderGameplay })
               </Pressable>
               <Pressable
                 style={styles.chooseButton}
-                onPress={() => setRenderGameplay(false)} //render homepage
+                onPress={() => handleChooseLevel()}
               >
                 <Text style={styles.textStyle}>Choose Level</Text>
               </Pressable>

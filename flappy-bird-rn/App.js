@@ -8,6 +8,8 @@ function App() {
   const [levelMS, setLevelMS] = useState(30)
   const [currentDifficultyLvl, setCurrentDifficultyLvl] = useState(null)
   const [ score, setScore ] = useState(0)
+  const [renderLogin, setRenderLogin] = useState(true)
+  const [ isGameOver, setIsGameOver ] = useState(false)
 
   useEffect(() => {
     fetch('https://cryptic-headland-19872.herokuapp.com/me')
@@ -20,7 +22,7 @@ function App() {
         .then(data => console.log('in fetch error', data))
       }
     })
-  }, [score])
+  }, [isGameOver])
 
 
   //TODO: add logout option in end module
@@ -30,7 +32,24 @@ function App() {
   
   return (
     <>
-      {renderGameplay ? <Gameplay player={player} levelMS={levelMS} setRenderGameplay={setRenderGameplay} currentDifficultyLvl={currentDifficultyLvl} score={score} setScore={setScore}/> : <HomePage setPlayer={setPlayer} setRenderGameplay={setRenderGameplay} setLevelMS={setLevelMS} setCurrentDifficultyLvl={setCurrentDifficultyLvl}/>}
+      {renderGameplay ? <Gameplay
+        player={player}
+        levelMS={levelMS}
+        setRenderGameplay={setRenderGameplay}
+        currentDifficultyLvl={currentDifficultyLvl}
+        score={score} setScore={setScore}
+        setRenderLogin={setRenderLogin}
+        isGameOver={isGameOver}
+        setIsGameOver={setIsGameOver}
+      /> :
+      <HomePage
+        setPlayer={setPlayer}
+        setRenderGameplay={setRenderGameplay}
+        setLevelMS={setLevelMS}
+        setCurrentDifficultyLvl={setCurrentDifficultyLvl}
+        renderLogin={renderLogin}
+        setRenderLogin={setRenderLogin}
+      />}
     </>
   )
 }
