@@ -133,6 +133,7 @@ function Gameplay({ player, levelMS, setRenderGameplay, currentDifficultyLvl, sc
             setRenderGameplay={setRenderGameplay}
             setRenderLogin={setRenderLogin}
             currentDifficultyLvl={currentDifficultyLvl}
+            setGameOver={setIsGameOver}
           />
           <Bird
             birdBottom={birdBottom}

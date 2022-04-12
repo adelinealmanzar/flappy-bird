@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Modal, Text, StyleSheet, View, Pressable } from 'react-native'
 
-function ScoreBoard({ score, isGameOver, restart, player, setRenderGameplay, setRenderLogin, currentDifficultyLvl }) {
+function ScoreBoard({ score, isGameOver, restart, player, setRenderGameplay, setRenderLogin, currentDifficultyLvl, setGameOver }) {
   const [renderScores, setRenderScores] = useState(null)
 
   useEffect(() => {
@@ -29,9 +29,6 @@ function ScoreBoard({ score, isGameOver, restart, player, setRenderGameplay, set
     }
   }, [isGameOver])
 
-  function testRenderScores() {
-    
-  }
 
   function renderDifficulty(difficultyNum) {
     switch(difficultyNum) {
@@ -46,6 +43,7 @@ function ScoreBoard({ score, isGameOver, restart, player, setRenderGameplay, set
 
   function handleChooseLevel() {
     setRenderGameplay(false) //render homepage
+    setGameOver(false)
     setRenderLogin(false) //render start page
   }
 
