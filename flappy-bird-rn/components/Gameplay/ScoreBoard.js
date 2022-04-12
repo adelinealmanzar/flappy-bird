@@ -12,7 +12,7 @@ function ScoreBoard({ score, isGameOver, restart, player, setRenderGameplay, set
     }
     
     if (isGameOver) {
-      console.log('gameOver')
+      console.log('gameover')
       fetch(`https://cryptic-headland-19872.herokuapp.com/scores`, {
         method: "POST",
         headers: {
@@ -29,6 +29,7 @@ function ScoreBoard({ score, isGameOver, restart, player, setRenderGameplay, set
     }
   }, [isGameOver])
 
+  // console.log('recent score', player.scores)
 
   function renderDifficulty(difficultyNum) {
     switch(difficultyNum) {

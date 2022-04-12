@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Dimensions, StyleSheet, ImageBackground } from 'react-native'
 import Login from './Login'
 import Start from './Start'

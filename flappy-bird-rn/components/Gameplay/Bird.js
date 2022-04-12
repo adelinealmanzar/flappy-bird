@@ -5,6 +5,8 @@ function Bird({ birdBottom, birdLeft }) {
   const birdWidth = 50
   const birdHeight = 60
 
+  
+
   const image = { uri: "https://i.ibb.co/PcCqNRP/flappy-bird.png" }
 
   return (
