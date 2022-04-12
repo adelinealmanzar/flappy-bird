@@ -8,19 +8,24 @@ class PlayersController < ApplicationController
     end
     
     def show
-        player = Player.find(params[:id])
-        render json: player
+        player = Player.find_by(id: session[:player_id])
+        if player
+            render json: player
+        else
+            render json: { error: "Player not authorized" }, status: :unauthorized
+        end
+        
     end
         
     def create
-        player = Player.create!(player_params)
+        player = Player.create!(player_params) #may need to add if player.valid? conditional
         render json: player, status: :created
     end
 
     private
 
     def player_params
-        params.permit(:username, :password)
+        params.permit(:username, :password, :password_confirmation)
     end
 
     def render_not_found_res
