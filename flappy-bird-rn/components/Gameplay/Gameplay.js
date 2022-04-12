@@ -53,7 +53,6 @@ function Gameplay({ player, levelMS, setRenderGameplay, currentDifficultyLvl, sc
     } else {
       //when obstacle goes off the screen
       setObstaclesLeft(screenWidth) //loop obstacle by restarting on left of screen
-      // setScore(score => score + 1)
       setObstacleRanHeight(0 - Math.random() * 100)
     }
   }, [obstaclesLeft])
@@ -71,16 +70,10 @@ function Gameplay({ player, levelMS, setRenderGameplay, currentDifficultyLvl, sc
     } else {
       //when obstacle goes off the screen
       setObstaclesLeftTwo(screenWidth) //loop obstacle
-      // setScore(score => score + 1)
       setObstacleRanHeightTwo(0 - Math.random() * 100)
     }
   }, [obstaclesLeftTwo])
 
-  // console.log('in gameplay', score)
-  // obstaclesLeftTwo === birdLeft - birdWidth ? console.log('yes') : console.log('no')
-  // obstaclesLeftTwo > birdLeft - birdWidth ? console.log(true, obstaclesLeft) : console.log(false, obstaclesLeft) //if obstacle left if greaater than the left side of the screen (so in the right of the screen)
-  // birdLeft - birdWidth = 147 //obstaccle switch around 170
-  console.log()
   // is collision happens, game over
   useEffect(() => {
     if (
@@ -97,6 +90,7 @@ function Gameplay({ player, levelMS, setRenderGameplay, currentDifficultyLvl, sc
     }
   },)
 
+  // if bird passes obstacles, set score
   useEffect(() => {
     if (
       obstaclesLeftTwo > birdLeft - birdWidth &&
