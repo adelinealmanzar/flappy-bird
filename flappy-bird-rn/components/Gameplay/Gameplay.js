@@ -3,6 +3,7 @@ import { Dimensions, StyleSheet, View, ImageBackground, TouchableWithoutFeedback
 import Bird from './Bird'
 import Obstacles from './Obstacles'
 import ScoreBoard from './ScoreBoard'
+import { Audio } from 'expo-av'
 
 const screenWidth = Dimensions.get("screen").width //get screen width on whichever mobile phone
 const screenHeight = Dimensions.get("screen").height //get screen height on whichever mobile phone
@@ -13,6 +14,26 @@ function Gameplay({ player, levelMS, setRenderGameplay, currentDifficultyLvl, sc
   const [ obstaclesLeftTwo, setObstaclesLeftTwo ] = useState(screenWidth && screenWidth + screenWidth/2 + 30)
   const [ obstacleRanHeight, setObstacleRanHeight ] = useState(0)
   const [ obstacleRanHeightTwo, setObstacleRanHeightTwo ] = useState(0)
+
+  const [sound, setSound] = React.useState();
+
+  async function playSound() {
+    console.log('Loading Sound');
+    const { sound } = await Audio.Sound.createAsync(
+       require('../../assets/gameOver.wav')
+    );
+    setSound(sound);
+
+    console.log('Playing Sound');
+    await sound.playAsync(); }
+
+  useEffect(() => {
+    return sound
+      ? () => {
+          console.log('Unloading Sound');
+          sound.unloadAsync(); }
+      : undefined;
+  }, [sound]);
 
   const birdLeft = screenWidth / 2 //point at the bottom left of our bird view/div
   const birdWidth = 60
@@ -87,6 +108,7 @@ function Gameplay({ player, levelMS, setRenderGameplay, currentDifficultyLvl, sc
       ) 
       {
       gameover()
+      playSound()
     }
   },)
 
