@@ -12,7 +12,6 @@ function ScoreBoard({ score, isGameOver, restart, player, setRenderGameplay, set
     }
     
     if (isGameOver) {
-      console.log('gameover')
       fetch(`https://cryptic-headland-19872.herokuapp.com/scores`, {
         method: "POST",
         headers: {
@@ -58,7 +57,6 @@ function ScoreBoard({ score, isGameOver, restart, player, setRenderGameplay, set
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            {/* <Image source={gameOverImg} styles={styles.gameOver} /> */}
             <Text style={styles.scoreText}>Score: {score}</Text>
             <View>
               <Text style={styles.highscoresText}>Previous High Scores</Text>

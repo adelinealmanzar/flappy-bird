@@ -15,11 +15,11 @@ function Gameplay({ player, levelMS, setRenderGameplay, currentDifficultyLvl, sc
   const [ obstacleRanHeight, setObstacleRanHeight ] = useState(0)
   const [ obstacleRanHeightTwo, setObstacleRanHeightTwo ] = useState(0)
 
-  const [sound, setSound] = React.useState();
+  const [sound, setSound] = useState();
 
-  async function playFlapSound() {
+  async function playSound() {
     const { sound } = await Audio.Sound.createAsync(
-       require('../../assets/flaps.wav')
+       require('../../assets/gameOver.wav')
     )
     setSound(sound)
 
@@ -124,7 +124,6 @@ function Gameplay({ player, levelMS, setRenderGameplay, currentDifficultyLvl, sc
   function jump() {
     if (!isGameOver && (birdBottom < screenHeight)){
       setBirdBottom(birdBottom => birdBottom + 50)
-      playFlapSound()
     }
   }
 
@@ -140,11 +139,14 @@ function Gameplay({ player, levelMS, setRenderGameplay, currentDifficultyLvl, sc
   }
 
   function gameover() {
-    setIsGameOver(true)
-    // playSound()
-    clearInterval(birdBottomTimerId)
-    clearInterval(obstaclesLeftTimerId)
-    clearInterval(obstaclesLeftTimerIdTwo)
+    if (!isGameOver) {
+      setIsGameOver(true)
+      playSound()
+    } else {
+      clearInterval(birdBottomTimerId)
+      clearInterval(obstaclesLeftTimerId)
+      clearInterval(obstaclesLeftTimerIdTwo)
+    }
   }
 
   const backgroundImage = { uri: "https://i.ibb.co/V3Wj4Qp/fb-game-background.png" }
@@ -206,8 +208,8 @@ const styles = StyleSheet.create({
     width: 300,
     height: 80,
     resizeMode: 'cover',
-    left: 55,
-    bottom: -200,
+    left: screenWidth/2 - 150,
+    bottom: -screenHeight/5,
     zIndex: 2,
     borderWidth: 2,
     borderRadius: 10
