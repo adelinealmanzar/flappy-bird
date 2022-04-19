@@ -17,23 +17,20 @@ function Gameplay({ player, levelMS, setRenderGameplay, currentDifficultyLvl, sc
 
   const [sound, setSound] = React.useState();
 
-  async function playSound() {
-    console.log('Loading Sound');
+  async function playFlapSound() {
     const { sound } = await Audio.Sound.createAsync(
-       require('../../assets/gameOver.wav')
-    );
-    setSound(sound);
+       require('../../assets/flaps.wav')
+    )
+    setSound(sound)
 
-    console.log('Playing Sound');
     await sound.playAsync(); }
 
   useEffect(() => {
     return sound
       ? () => {
-          console.log('Unloading Sound');
-          sound.unloadAsync(); }
-      : undefined;
-  }, [sound]);
+          sound.unloadAsync() }
+      : undefined
+  }, [sound])
 
   const birdLeft = screenWidth / 2 //point at the bottom left of our bird view/div
   const birdWidth = 60
@@ -108,7 +105,6 @@ function Gameplay({ player, levelMS, setRenderGameplay, currentDifficultyLvl, sc
       ) 
       {
       gameover()
-      playSound()
     }
   },)
 
@@ -128,6 +124,7 @@ function Gameplay({ player, levelMS, setRenderGameplay, currentDifficultyLvl, sc
   function jump() {
     if (!isGameOver && (birdBottom < screenHeight)){
       setBirdBottom(birdBottom => birdBottom + 50)
+      playFlapSound()
     }
   }
 
@@ -144,6 +141,7 @@ function Gameplay({ player, levelMS, setRenderGameplay, currentDifficultyLvl, sc
 
   function gameover() {
     setIsGameOver(true)
+    // playSound()
     clearInterval(birdBottomTimerId)
     clearInterval(obstaclesLeftTimerId)
     clearInterval(obstaclesLeftTimerIdTwo)
