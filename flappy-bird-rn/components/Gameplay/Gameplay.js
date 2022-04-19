@@ -3,6 +3,7 @@ import { Dimensions, StyleSheet, View, ImageBackground, TouchableWithoutFeedback
 import Bird from './Bird'
 import Obstacles from './Obstacles'
 import ScoreBoard from './ScoreBoard'
+import { Audio } from 'expo-av'
 
 const screenWidth = Dimensions.get("screen").width //get screen width on whichever mobile phone
 const screenHeight = Dimensions.get("screen").height //get screen height on whichever mobile phone
@@ -14,7 +15,25 @@ function Gameplay({ player, levelMS, setRenderGameplay, currentDifficultyLvl, sc
   const [ obstacleRanHeight, setObstacleRanHeight ] = useState(0)
   const [ obstacleRanHeightTwo, setObstacleRanHeightTwo ] = useState(0)
 
+  const [sound, setSound] = useState();
+
+  async function playSound() {
+    const { sound } = await Audio.Sound.createAsync(
+       require('../../assets/gameOver.wav')
+    )
+    setSound(sound)
+
+    await sound.playAsync(); }
+
+  useEffect(() => {
+    return sound
+      ? () => {
+          sound.unloadAsync() }
+      : undefined
+  }, [sound])
+
   const birdLeft = screenWidth / 2 //point at the bottom left of our bird view/div
+  const birdWidth = 60
   const gravity = 3
   let birdBottomTimerId
   let obstaclesLeftTimerId
@@ -52,7 +71,6 @@ function Gameplay({ player, levelMS, setRenderGameplay, currentDifficultyLvl, sc
     } else {
       //when obstacle goes off the screen
       setObstaclesLeft(screenWidth) //loop obstacle by restarting on left of screen
-      setScore(score => score + 1)
       setObstacleRanHeight(0 - Math.random() * 100)
     }
   }, [obstaclesLeft])
@@ -70,12 +88,9 @@ function Gameplay({ player, levelMS, setRenderGameplay, currentDifficultyLvl, sc
     } else {
       //when obstacle goes off the screen
       setObstaclesLeftTwo(screenWidth) //loop obstacle
-      setScore(score => score + 1)
       setObstacleRanHeightTwo(0 - Math.random() * 100)
     }
   }, [obstaclesLeftTwo])
-
-  // console.log('in gameplay', score)
 
   // is collision happens, game over
   useEffect(() => {
@@ -92,6 +107,19 @@ function Gameplay({ player, levelMS, setRenderGameplay, currentDifficultyLvl, sc
       gameover()
     }
   },)
+
+  // if bird passes obstacles, set score
+  useEffect(() => {
+    if (
+      obstaclesLeftTwo > birdLeft - birdWidth &&
+      obstaclesLeftTwo < screenWidth/2 - birdWidth + 5 ||
+      obstaclesLeft > birdLeft - birdWidth &&
+      obstaclesLeft < screenWidth/2 - birdWidth + 5
+    )
+    {
+      setScore (score => score + 1)
+    }
+  }, [obstaclesLeft, obstaclesLeftTwo])
 
   function jump() {
     if (!isGameOver && (birdBottom < screenHeight)){
@@ -111,10 +139,14 @@ function Gameplay({ player, levelMS, setRenderGameplay, currentDifficultyLvl, sc
   }
 
   function gameover() {
-    setIsGameOver(true)
-    clearInterval(birdBottomTimerId)
-    clearInterval(obstaclesLeftTimerId)
-    clearInterval(obstaclesLeftTimerIdTwo)
+    if (!isGameOver) {
+      setIsGameOver(true)
+      playSound()
+    } else {
+      clearInterval(birdBottomTimerId)
+      clearInterval(obstaclesLeftTimerId)
+      clearInterval(obstaclesLeftTimerIdTwo)
+    }
   }
 
   const backgroundImage = { uri: "https://i.ibb.co/V3Wj4Qp/fb-game-background.png" }
@@ -126,7 +158,7 @@ function Gameplay({ player, levelMS, setRenderGameplay, currentDifficultyLvl, sc
         <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.background}>
           {isGameOver && <Image source={gameOverImg} style={styles.gameOver}></Image>}
           <ScoreBoard
-            score={score}
+            score={score/2} //account for 2 pixel grace
             isGameOver={isGameOver}
             restart={restart}
             player={player}
@@ -176,8 +208,8 @@ const styles = StyleSheet.create({
     width: 300,
     height: 80,
     resizeMode: 'cover',
-    left: 55,
-    bottom: -200,
+    left: screenWidth/2 - 150,
+    bottom: -screenHeight/5,
     zIndex: 2,
     borderWidth: 2,
     borderRadius: 10
