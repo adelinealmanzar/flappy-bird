@@ -65,4 +65,5 @@ On mobile, scan Expo QR code to open the application with the Expo Go app. Openi
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
-All resources used were from open source libraries or free downloads. This application was created with inspiration from the Flappy Bird game developed for mobile by Dong Nguyen and .Gears.
+All resources used were from open source libraries or free downloads. This application was created with inspiration from the Flappy Bird game developed for mobile by Dong Nguyen and .Gears. Inital game logic was built by following Ania Kubów's "Flappy Bird in React Native" [video](https://www.youtube.com/watch?v=dhpjjAxKbHE&t=343s&ab_channel=CodewithAniaKub%C3%B3w) on Youtube.
+
